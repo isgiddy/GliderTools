@@ -617,7 +617,7 @@ def quenching_correction(
     grp_batch = df.groupby(batch)
 
     # GETTING NIGHTTIME AVERAGE FOR NONGRIDDED DATA - USE RBF INTERPOLATION
-    for b in np.unique(night_ave.index.labels[0]):
+    for b in np.unique(night_ave.unstack().index):
         i = grp_batch.groups[b].values  # batch index
         j = i[~np.isnan(flr[i]) & (depth[i] < 400)]  # index without nans
         x = night_ave.loc[b].index.values  # batch depth

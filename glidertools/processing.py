@@ -207,9 +207,9 @@ def calc_oxygen(
         Y = o2raw[surf].copy()
         X = c_[ones(surf.sum()), o2sat[surf]]
         # removing outliers accodring to IQR
-        ll, ul = outlier_bounds_iqr(Y, multiplier=1.5)
-        m = (Y > ll) & (Y < ul)
-        ratios = Y[m] / X[m, 1]
+        mask = outlier_bounds_iqr(Y, multiplier=1.5)
+        
+        ratios = Y[Y==mask] / X[Y==mask, 1]
 
         # compare the slopes
         observed_ratio = median(ratios)
